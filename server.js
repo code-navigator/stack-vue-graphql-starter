@@ -26,13 +26,20 @@ mongoose
   .then(() => console.log('DB connected'))
   .catch(err => console.log(err))
 
+// Verify JWT Token passed from client
+const getUser = token => {
+  if (token) {
+    
+  }
+}
+
 // Create Apollo/GraphQL Server using typeDefs, resolvers, and context object
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: {
-    User,
-    Post
+  context: ({ req }) => {
+    const token = req.headers['authorization']
+    return { User, Post, currentUser: getUser(token) }
   }
 })
 
